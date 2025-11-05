@@ -19,7 +19,8 @@ files, with options to change text and background colors.
 
 3. SAVE : 
 
-        - Save current text buffer to a file. - The user enters the file name manually
+        - Save current text buffer to a file. 
+        - The user enters the file name manually
 
 4. COLOR :
 
@@ -62,5 +63,5 @@ keyboard.
 - [ ] NEW window must open a blank page whatever happened before.
 - [ ] Backspace Key must go to previous line in case being in first col.
 - [ ] Insert Mode using a flag not just char by char.
-- [ ] Mene for each options inside any window with the right spacing.
-- [ ] Entery Key in the middle of line must move the next part of the line.
+- [ ] Menu for each options inside any window with the right spacing.
+- [ ] Enter Key in the middle of line must move the next part of the line.
