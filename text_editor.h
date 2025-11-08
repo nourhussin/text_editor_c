@@ -135,7 +135,7 @@ void print_char_array(char arr[MaxRows][MaxLineSize], int row_bias, int col_bias
 void print_char_window(char arr[MaxRows][MaxLineSize],int row_bias, int col_bias, int back_color, int text_color)
 {
     if(back_color > 7) back_color = 0; // Convert to valid color
-    if(text_color > 7) text_color = 7; // Convert to valid color
+    if(text_color > 15) text_color = 7; // Convert to valid color
     textattr(((back_color & 0xF) << 4) | (text_color & 0xF));
 
     for (int i = 0; i < MaxRows; i++)
@@ -341,4 +341,129 @@ void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *te
         gotoxy(col, row);
 
     } while (out_of_text == 0);
+}
+
+int menu(const char *options[], int n_options, int start_x, int start_y, int highlight_color, int normal_color)
+{
+    int current_option = 0;
+    int out = 0;
+    char ctrl;
+
+    do {
+        
+        for (int i = 0; i < n_options; i++)
+        {
+            gotoxy(start_x, start_y + i);
+            if (i == current_option)
+            {
+                textattr(highlight_color);
+                printf("-> %s", options[i]);
+            }
+            else
+            {
+                textattr(normal_color);
+                printf("   %s", options[i]);
+            }
+        }
+        gotoxy(start_x, start_y + current_option);
+        textattr(normal_color);
+
+        ctrl = getch();
+        switch(ctrl)
+        {
+            case -32:
+            case 0:  // extended keys
+                ctrl = getch();
+                switch(ctrl)
+                {
+                    case 72: // Up arrow
+                        current_option--;
+                        if (current_option < 0)
+                            current_option = n_options - 1;
+                        break;
+
+                    case 80: // Down arrow
+                        current_option++;
+                        if (current_option >= n_options)
+                            current_option = 0;
+                        break;
+                }
+                break;
+
+            case 13: // Enter
+                textattr(0x20);
+                gotoxy(start_x, start_y + current_option);
+                printf("-> %s", options[current_option]);
+                out = 1;
+                break;
+        }
+
+    } while (!out);
+
+    textattr(normal_color);
+    return current_option;
+}
+
+int color_menu(int is_background) {
+
+    int current_option = 0;
+    int out = 0;
+    char ctrl;
+
+    int start_x = ColBias+ 60;
+    int start_y = 6;
+
+    if(is_background)
+        gotoxy(start_x, start_y - 2), printf("Background Color:");
+    else
+        gotoxy(start_x, start_y - 2), printf("Text Color:      ");
+
+    int n_options = is_background ? 8 : 16;
+
+    do {
+        for (int i = 0; i < n_options; i++) {
+            gotoxy(start_x+2, start_y + i);
+            int color_code = is_background ? (i << 4) : i;
+            textattr(color_code);
+
+            if(is_background)
+                printf("    "); 
+            else
+                printf(" AAA");
+        }
+        textattr(0x07);
+        for (int i = 0; i < n_options; i++)
+        {
+            gotoxy(start_x, start_y + i);
+            if (i == current_option)
+                printf("->");
+            else
+                printf("  ");
+        }
+        gotoxy(start_x, start_y + current_option);
+
+        ctrl = getch();
+        switch(ctrl) {
+            case -32: case 0:
+                ctrl = getch();
+                switch(ctrl) {
+                    case 72: // Up
+                        current_option--;
+                        if(current_option < 0) current_option = n_options - 1;
+                        break;
+                    case 80: // Down
+                        current_option++;
+                        if(current_option >= n_options) current_option = 0;
+                        break;
+                }
+                break;
+            case 13: // Enter
+                out = 1;
+                break;
+        }
+
+    } while(!out);
+
+    textattr(0x07);
+    return current_option;
 }

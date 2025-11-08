@@ -63,5 +63,5 @@ keyboard.
 - [X] NEW window must open a blank page whatever happened before.
 - [X] Backspace Key must go to previous line in case being in first col.
 - [X] Insert Mode using a flag not just char by char.
-- [ ] Menu for each options inside any window with the right spacing.
+- [X] Menu for each options inside any window with the right spacing.
 - [ ] Enter Key in the middle of line must move the next part of the line.

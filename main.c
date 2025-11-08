@@ -8,6 +8,7 @@ int main()
     int mode, display_option, color_option;
     int text_color = 0, back_color = 7;
     char char_arr[MaxRows][MaxLineSize] = {{'\0'}};
+    const char* display_menu[] = {"Current Text","Open File"}; 
     char filename[100]={'\0'};
     char ctrl;
 
@@ -24,10 +25,10 @@ int main()
 
 //---------------------------------------- Second Mode --------------------------------------------------------------
         case 1: // DISPLAY
-            printf("\n\nWanna Display:\n1.Current Text\n2.Open File\n");
-            scanf("%d",&display_option);
-            if(display_option == 2)
+            display_option = menu(display_menu, 2, ColBias+20, 4, 0x70, 0x07);
+            if(display_option == 1)
             {
+                gotoxy(ColBias+20, 6);
                 printf("Enter file name: ");
                 scanf("%99s", filename);
 
@@ -71,19 +72,8 @@ int main()
 
 //---------------------------------------- Fourth Mode ---------------------------------------------------------------
         case 3: // COLOR
-            printf("\n\n\n");
-            for(int i = 0; i < 8; i++)
-            {
-                printf("%d | ", i);
-                textattr((i << 4));
-                printf("     \n");
-                textattr(0x07);
-            }
-            printf("\nEnter background color number (0-7): ");
-            scanf("%d", &back_color);
-            printf("Enter text color number (0-7): ");
-            scanf("%d", &text_color);
-            getch();
+            back_color = color_menu(1);
+            text_color = color_menu(0);
             break;
 
 //---------------------------------------- Fifth Mode ----------------------------------------------------------------
