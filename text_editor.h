@@ -196,6 +196,7 @@ int print_main_menu()
 void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *text_color, int row,int col)
 {
     int out_of_text = 0;
+    int insert_flag = 1;
     char ctrl;
 
     print_char_window(char_arr, RowBias, ColBias, *back_color, *text_color);
@@ -279,9 +280,7 @@ void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *te
                         break;
 
                     case 82: // Insert
-                        insert_char(char_arr[row - RowBias], getch(), col - ColBias);
-                        gotoxy(ColBias, row);
-                        printf("%-*s", MaxLineSize, char_arr[row - RowBias]);
+                        insert_flag = !insert_flag;
                         break;
                 }
                 break;
@@ -326,9 +325,16 @@ void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *te
                 if (row >= RowBias + MaxRows)
                     row = RowBias + MaxRows - 1;
 
-                char_arr[row - RowBias][col - ColBias] = ctrl;
-                gotoxy(col, row);
-                putchar(ctrl);
+                if (insert_flag)
+                {
+                    insert_char(char_arr[row - RowBias], ctrl, col - ColBias); 
+                    gotoxy(ColBias, row); printf("%-*s", MaxLineSize, char_arr[row - RowBias]);
+                }
+                else
+                {
+                    char_arr[row - RowBias][col - ColBias] = ctrl;
+                    gotoxy(col, row); putchar(ctrl); 
+                }
                 col++;
         }
 
