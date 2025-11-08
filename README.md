@@ -58,10 +58,10 @@ keyboard.
 
 ## Bugs & Features to be improved
 
-- [ ] Separate NEW editor mode from DISPLAY editor mode.
-- [ ] DISPLAY window must go to last character.
-- [ ] NEW window must open a blank page whatever happened before.
-- [ ] Backspace Key must go to previous line in case being in first col.
+- [X] Separate NEW editor mode from DISPLAY editor mode.
+- [X] DISPLAY window must go to last character.
+- [X] NEW window must open a blank page whatever happened before.
+- [X] Backspace Key must go to previous line in case being in first col.
 - [ ] Insert Mode using a flag not just char by char.
 - [ ] Menu for each options inside any window with the right spacing.
 - [ ] Enter Key in the middle of line must move the next part of the line.

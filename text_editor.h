@@ -289,7 +289,17 @@ void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *te
             case 8: // Backspace
                 delete_char(char_arr[row - RowBias], col - ColBias - 1);
                 col--;
-                if (col < ColBias) col = ColBias;
+                if (col < ColBias)
+                {
+                    row--;
+                    if (row < RowBias)
+                    {
+                        row = RowBias;
+                        col = ColBias;
+                    }
+                    else
+                        col = ColBias + strlen(char_arr[row - RowBias]);
+                }
                 gotoxy(ColBias, row);
                 printf("%-*s", MaxLineSize, char_arr[row - RowBias]);
                 break;
