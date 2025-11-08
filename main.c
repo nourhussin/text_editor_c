@@ -16,13 +16,14 @@ int main()
         switch(mode){
 //---------------------------------------- First Mode ---------------------------------------------------------------
         case 0: // NEW
-
-            run_edit_mode(char_arr, &back_color, &text_color);
+            for (int i = 0; i < MaxRows; i++)
+                for (int j = 0; j < MaxLineSize; j++)
+                    char_arr[i][j] = '\0';
+            run_edit_mode(char_arr, &back_color, &text_color,RowBias,ColBias);
             break;
-            
+
 //---------------------------------------- Second Mode --------------------------------------------------------------
         case 1: // DISPLAY
-            textattr(0x60);
             printf("\n\nWanna Display:\n1.Current Text\n2.Open File\n");
             scanf("%d",&display_option);
             if(display_option == 2)
@@ -48,14 +49,10 @@ int main()
                 }
 
                 fclose(fp);
-                print_char_array(char_arr, RowBias, 0);
             }
-
-
-            else
-                print_char_array(char_arr, RowBias, 0);
-            getch();
-            textattr(0x07);
+            row = last_row(char_arr);
+            col = last_col(char_arr[row]);
+            run_edit_mode(char_arr, &back_color, &text_color, row + RowBias, col + ColBias);
             break;
 
 //---------------------------------------- Third Mode ----------------------------------------------------------------

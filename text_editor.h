@@ -29,7 +29,7 @@ void print_char_array(char arr[MaxRows][MaxLineSize], int row_bias, int col_bias
 void print_char_window(char arr[MaxRows][MaxLineSize], int row_bias, int col_bias, int back_color, int text_color);
 
 int print_main_menu(void);
-void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *text_color);
+void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *text_color, int row,int col);
 
 #endif
 
@@ -193,9 +193,8 @@ int print_main_menu()
     return current_option;
 }
 
-void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *text_color)
+void run_edit_mode(char char_arr[MaxRows][MaxLineSize], int *back_color, int *text_color, int row,int col)
 {
-    int row = RowBias, col = ColBias;
     int out_of_text = 0;
     char ctrl;
 
